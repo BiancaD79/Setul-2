@@ -34,10 +34,10 @@ namespace Setul_2
                         case 11: P11(); break;
                         case 12: P12(); break;
                         case 13: P13(); break;
-                        //case 14: P14(); break;
-                        //case 15: P15(); break;
-                        //case 16: P16(); break;
-                        //case 17: P17(); break;
+                        case 14: P14(); break;
+                        case 15: P15(); break;
+                        case 16: P16(); break;
+                        case 17: P17(); break;
                     }
 
                 }
@@ -47,6 +47,213 @@ namespace Setul_2
             } while (ok != 0);
 
         }
+
+       
+
+
+        /// <summary>
+        /// Se da o secventa de 0 si 1, unde 0 inseamna paranteza deschisa si 1 inseamna paranteza inchisa. Determinati daca secventa reprezinta o secventa de paranteze corecta si,  daca este, determinati nivelul maxim de incuibare a parantezelor. De exemplu 0 1 0 0 1 0 1 1 este corecta si are nivelul maxim de incuibare 2 pe cand 0 0 1 1 1 0 este incorecta. 
+        /// </summary>
+        private static void P17()
+        {
+            bool brackets = true;
+            string n;
+            int nr1 = 0, nr0 = 0, maxcuib=0, consec0 = 0;
+            Console.WriteLine(" Determinati daca secventa reprezinta o secventa de paranteze corecta.\nIntroduceti o secventa de 0 si 1, nu folositi separatoare. (0 inseamna paranteza deschisa si 1 inseamna paranteza inchisa):");
+            n = Console.ReadLine();
+            /*if ((n[0] - '0') == 1) brackets = false;
+            for (int i = 0; i < n.Length; i++)
+            {
+              
+                if ((n[i]-'0') == 0) nr0++;
+                else nr1++;
+                if (nr0 < nr1) brackets = false;
+            }
+            if((n[n.Length-1] - '0') == 0) brackets = false;
+            if (nr0 != nr1) brackets = false;
+            if (brackets)
+                Console.WriteLine("Este o secventa de paranteze corecta");
+            else
+                Console.WriteLine("NU Este o secventa de paranteze corecta");
+            */
+
+            if ((n[0] - '0') == 1) brackets = false;
+            if(brackets)
+            for (int i = 0; i < n.Length; i++)
+            {
+                    if ((n[i] - '0') == 0) { nr0++; consec0++; }
+                    else { nr0--; if (consec0 > maxcuib) maxcuib = consec0; consec0 = 0;  }
+                if (nr0 < 0) { brackets = false; break; }
+            }
+            if ((n[n.Length - 1] - '0') == 0) brackets = false;
+            if (nr0 != 0) brackets = false;
+            if (brackets)
+                Console.WriteLine($"Este o secventa de paranteze corecta, nivelul de incuibare maxima este {maxcuib}");
+            else
+                Console.WriteLine("NU Este o secventa de paranteze corecta");
+        }
+
+        /// <summary>
+        /// O secventa bitonica rotita este o secventa bitonica sau una ca poate fi transformata intr-o secventa bitonica prin rotiri succesive (rotire = primul element devine ultimul). Se da o secventa de n numere. Se cere sa se determine daca este o secventa bitonica rotita. 
+        /// </summary>
+        private static void P16()
+        {
+            int x, n, ante, stop = 0, i, ult, prim;
+            bool cresc = false, decresc = false;
+
+            Console.Write("Se da o secventa de n numere. Se cere sa se determine daca este o secventa bitonica rotita. \nIntroduceti o valoare pentru n:");
+            n = int.Parse(Console.ReadLine());
+            Console.Write($"Elementul 1: ");
+            ante = int.Parse(Console.ReadLine());
+            prim = ante;
+            Console.Write($"Elementul 2: ");
+            x = int.Parse(Console.ReadLine());
+
+            if (x < ante) // daca incepem cu sir desc
+            {
+                for (i = 2; i < n; i++) // incepem cu un sir descresc
+                {
+                    Console.Write($"Elementul {i + 1}: ");
+                    x = int.Parse(Console.ReadLine());
+                    if (x > ante) { stop++; ante = x; break; }
+                    ante = x;
+                    cresc = true;
+                }
+                if (i < n)
+                {
+                    stop = 0;
+                    for (i = i + 1; i < n; i++) // continuam sir crescator
+                    {
+                        Console.Write($"Elementul {i + 1}: ");
+                        x = int.Parse(Console.ReadLine());
+                        if (x < ante) { stop++; ante = x; break; }
+                        ante = x;
+                        decresc = true;
+                    }
+                    if (i < n)
+                    {
+                        stop = 0;
+                        for (i = i + 1; i < n; i++) // terminam sir descresc
+                        {
+                            Console.Write($"Elementul {i + 1}: ");
+                            x = int.Parse(Console.ReadLine());
+                            if (x > ante) stop++;
+                            ante = x;
+                        }
+                    }
+                }
+                ult = ante;
+                if (stop == 0 && prim < ult && decresc && cresc) Console.WriteLine("Sirul este o secventa bitonica rotita");
+                else Console.Write("Sirul nu este o secventa bitonica rotita");
+            }
+            else
+            {
+                for (i = 2; i < n; i++)
+                {
+                    Console.Write($"Elementul {i + 1}: ");
+                    x = int.Parse(Console.ReadLine());
+                    if (x < ante) { stop++; ante = x; break; }
+                    ante = x;
+                    cresc = true;
+                }
+
+                if (i < n)
+                {
+                    stop = 0;
+                    for (i = i + 1; i < n; i++)
+                    {
+                        Console.Write($"Elementul {i + 1}: ");
+                        x = int.Parse(Console.ReadLine());
+                        if (x > ante) stop++;
+                        ante = x;
+                        decresc = true;
+                    }
+                }
+                if (stop == 0 && cresc && decresc) Console.WriteLine("Sirul este o secventa bitonica rotita");
+                else Console.Write("Sirul nu este o secventa bitonica rotita");
+            }
+        }
+
+        /// <summary>
+        /// O secventa bitonica este o secventa de numere care incepe monoton crescator si continua monoton descrecator. De ex. 1,2,2,3,5,4,4,3 este o secventa bitonica. Se da o secventa de n numere. Sa se determine daca este bitonica. 
+        /// </summary>
+        private static void P15()
+        {
+            int x, n, ante, stop = 0,i;
+            
+            Console.Write("Se da o secventa de n numere. Sa se determine daca este bitonica.  \nIntroduceti o valoare pentru n:");
+            n = int.Parse(Console.ReadLine());
+            Console.Write($"Elementul 1: ");
+            ante = int.Parse(Console.ReadLine());
+                
+                for (i = 1; i < n; i++)
+                {
+                    Console.Write($"Elementul {i + 1}: ");
+                    x = int.Parse(Console.ReadLine());
+                    if (x < ante) { stop++; ante = x; break; }
+                    ante = x;
+                }
+                stop = 0;
+                for(i = i+1; i<n ;i++)
+                {
+                    Console.Write($"Elementul {i + 1}: ");
+                    x = int.Parse(Console.ReadLine());
+                    if (x > ante) stop++;
+                    ante = x;
+                }
+                if (stop == 0) Console.WriteLine("Sirul este o secventa bitonica");
+                else Console.Write("Sirul nu este bitonica");
+
+        }
+        /// <summary>
+        /// O secventa monotona rotita este o secventa de numere monotona sau poate fi transformata intr-o secventa montona prin rotiri succesive. Determinati daca o secventa de n numere este o secventa monotona rotita. 
+        /// </summary>
+        private static void P14()
+        {
+            int x, n, ante, stop = 0;
+            bool repetat = false;
+
+            Console.Write(" Determinati daca o secventa de n numere este o secventa monotona rotita. \nIntroduceti o valoare pentru n:");
+            n = int.Parse(Console.ReadLine());
+            Console.Write($"Elementul 1: ");
+            ante = int.Parse(Console.ReadLine());
+            Console.Write($"Elementul 2: ");
+            x = int.Parse(Console.ReadLine());
+            if (x > ante)
+            {
+                ante = x;
+                for (int i = 2; i < n; i++)
+                {
+                    Console.Write($"Elementul {i + 1}: ");
+                    x = int.Parse(Console.ReadLine());
+                    if (x < ante) stop++;
+                    if (x == ante) repetat = true;
+                    ante = x;
+                }
+                if (stop == 0 && !repetat) Console.WriteLine("Sirul este o secventa monotona (crescatoare) rotita.(Sirul era deja crescatoare)");
+                else if (stop == 1) Console.WriteLine("Sirul este o secventa monotona (crescatoare) rotita");
+                else if(stop == n-2) Console.WriteLine("Sirul este o secventa monotona (descrescatoare) rotita");
+                    else Console.Write("Sirul nu este monotona rotita");
+            }
+            else
+            {
+                ante = x;
+                for (int i = 2; i < n; i++)
+                {
+                    Console.Write($"Elementul {i + 1}: ");
+                    x = int.Parse(Console.ReadLine());
+                    if (x > ante) stop++;
+                    if (x == ante) repetat = true;
+                    ante = x;
+                }
+                if (stop == 0 && !repetat) Console.WriteLine("Sirul este o secventa monotona (descrescatoare) rotita.(Sirul era deja descrescatoare)");
+                else if (stop == 1) Console.WriteLine("Sirul este o secventa monotona (descrescatoare) rotita");
+                else if(stop == n-2) Console.WriteLine("Sirul este o secventa monotona (crescatoare) rotita");
+                else Console.Write("Sirul nu este monotona rotita");
+            }
+
+        }
+
         /// <summary>
         /// O secventa crescatoare rotita este o secventa de numere care este in ordine crescatoare sau poate fi transformata intr-o secventa in ordine crescatoare prin rotiri succesive (rotire cu o pozitie spre stanga = toate elementele se muta cu o pozitie spre stanga si primul element devine ultimul). Determinati daca o secventa de n numere este o secventa crescatoare rotita. 
         /// O secventa monotona rotita este o secventa de numere monotona sau poate fi transformata intr-o secventa montona prin
