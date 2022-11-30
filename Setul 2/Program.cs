@@ -16,7 +16,7 @@ namespace Setul_2
                 Console.Clear();
                 Console.Write("Alegeti o problema: ");
                 prob = int.Parse(Console.ReadLine());
-                if (prob < 1 || prob > 21) Console.Write("Nu ati introdus un numar corect!");
+                if (prob < 1 || prob > 17) Console.Write("Nu ati introdus un numar corect!");
                 else
                 {
                     switch (prob)
@@ -103,75 +103,86 @@ namespace Setul_2
 
             Console.Write("Se da o secventa de n numere. Se cere sa se determine daca este o secventa bitonica rotita. \nIntroduceti o valoare pentru n:");
             n = int.Parse(Console.ReadLine());
-            Console.Write($"Elementul 1: ");
-            ante = int.Parse(Console.ReadLine());
-            prim = ante;
-            Console.Write($"Elementul 2: ");
-            x = int.Parse(Console.ReadLine());
-
-            if (x < ante) // daca incepem cu sir desc
+            if (n > 1)
             {
-                for (i = 2; i < n; i++) // incepem cu un sir descresc
+                Console.Write($"Elementul 1: ");
+                ante = int.Parse(Console.ReadLine());
+                prim = ante;
+                Console.Write($"Elementul 2: ");
+                x = int.Parse(Console.ReadLine());
+
+                if (x < ante) // daca incepem cu sir desc
                 {
-                    Console.Write($"Elementul {i + 1}: ");
-                    x = int.Parse(Console.ReadLine());
-                    if (x > ante) { stop++; ante = x; break; }
-                    ante = x;
-                    cresc = true;
-                }
-                if (i < n)
-                {
-                    stop = 0;
-                    for (i = i + 1; i < n; i++) // continuam sir crescator
+                    for (i = 2; i < n; i++) // incepem cu un sir descresc
                     {
                         Console.Write($"Elementul {i + 1}: ");
                         x = int.Parse(Console.ReadLine());
-                        if (x < ante) { stop++; ante = x; break; }
+                        if (x > ante) { stop++; ante = x; break; }
                         ante = x;
-                        decresc = true;
+                        cresc = true;
                     }
                     if (i < n)
                     {
                         stop = 0;
-                        for (i = i + 1; i < n; i++) // terminam sir descresc
+                        for (i = i + 1; i < n; i++) // continuam sir crescator
+                        {
+                            Console.Write($"Elementul {i + 1}: ");
+                            x = int.Parse(Console.ReadLine());
+                            if (x < ante) { stop++; ante = x; break; }
+                            ante = x;
+                            decresc = true;
+                        }
+                        if (i < n)
+                        {
+                            stop = 0;
+                            for (i = i + 1; i < n; i++) // terminam sir descresc
+                            {
+                                Console.Write($"Elementul {i + 1}: ");
+                                x = int.Parse(Console.ReadLine());
+                                if (x > ante) stop++;
+                                ante = x;
+                            }
+                        }
+                    }
+                    ult = ante;
+                    if (stop == 0 && prim < ult && decresc && cresc) Console.WriteLine("Sirul este o secventa bitonica rotita");
+                    else Console.Write("Sirul nu este o secventa bitonica rotita");
+                }
+                else
+                {
+                    for (i = 2; i < n; i++)
+                    {
+                        Console.Write($"Elementul {i + 1}: ");
+                        x = int.Parse(Console.ReadLine());
+                        if (x < ante) 
+                        {
+                            if (i == n - 1) decresc = true;
+                            else { stop++; ante = x; break; } 
+                        }
+                        ante = x;
+                        cresc = true;
+                    }
+
+                    if (i < n)
+                    {
+                        stop = 0;
+                        for (i = i + 1; i < n; i++)
                         {
                             Console.Write($"Elementul {i + 1}: ");
                             x = int.Parse(Console.ReadLine());
                             if (x > ante) stop++;
                             ante = x;
+                            decresc = true;
                         }
                     }
+                  
+                    
+                    if (stop == 0 && cresc && decresc) Console.WriteLine("Sirul este o secventa bitonica rotita");
+                    else Console.Write("Sirul nu este o secventa bitonica rotita");
                 }
-                ult = ante;
-                if (stop == 0 && prim < ult && decresc && cresc) Console.WriteLine("Sirul este o secventa bitonica rotita");
-                else Console.Write("Sirul nu este o secventa bitonica rotita");
             }
             else
-            {
-                for (i = 2; i < n; i++)
-                {
-                    Console.Write($"Elementul {i + 1}: ");
-                    x = int.Parse(Console.ReadLine());
-                    if (x < ante) { stop++; ante = x; break; }
-                    ante = x;
-                    cresc = true;
-                }
-
-                if (i < n)
-                {
-                    stop = 0;
-                    for (i = i + 1; i < n; i++)
-                    {
-                        Console.Write($"Elementul {i + 1}: ");
-                        x = int.Parse(Console.ReadLine());
-                        if (x > ante) stop++;
-                        ante = x;
-                        decresc = true;
-                    }
-                }
-                if (stop == 0 && cresc && decresc) Console.WriteLine("Sirul este o secventa bitonica rotita");
-                else Console.Write("Sirul nu este o secventa bitonica rotita");
-            }
+                Console.WriteLine("n este prea mic!");
         }
 
         /// <summary>
@@ -183,9 +194,11 @@ namespace Setul_2
             
             Console.Write("Se da o secventa de n numere. Sa se determine daca este bitonica.  \nIntroduceti o valoare pentru n:");
             n = int.Parse(Console.ReadLine());
-            Console.Write($"Elementul 1: ");
-            ante = int.Parse(Console.ReadLine());
-                
+            if (n > 0)
+            {
+                Console.Write($"Elementul 1: ");
+                ante = int.Parse(Console.ReadLine());
+
                 for (i = 1; i < n; i++)
                 {
                     Console.Write($"Elementul {i + 1}: ");
@@ -194,7 +207,7 @@ namespace Setul_2
                     ante = x;
                 }
                 stop = 0;
-                for(i = i+1; i<n ;i++)
+                for (i = i + 1; i < n; i++)
                 {
                     Console.Write($"Elementul {i + 1}: ");
                     x = int.Parse(Console.ReadLine());
@@ -203,7 +216,8 @@ namespace Setul_2
                 }
                 if (stop == 0) Console.WriteLine("Sirul este o secventa bitonica");
                 else Console.Write("Sirul nu este bitonica");
-
+            }
+            else Console.WriteLine("n este prea mic!");
         }
         /// <summary>
         /// O secventa monotona rotita este o secventa de numere monotona sau poate fi transformata intr-o secventa montona prin rotiri succesive. Determinati daca o secventa de n numere este o secventa monotona rotita. 
@@ -215,43 +229,46 @@ namespace Setul_2
 
             Console.Write(" Determinati daca o secventa de n numere este o secventa monotona rotita. \nIntroduceti o valoare pentru n:");
             n = int.Parse(Console.ReadLine());
-            Console.Write($"Elementul 1: ");
-            ante = int.Parse(Console.ReadLine());
-            Console.Write($"Elementul 2: ");
-            x = int.Parse(Console.ReadLine());
-            if (x > ante)
+            if (n > 1)
             {
-                ante = x;
-                for (int i = 2; i < n; i++)
+                Console.Write($"Elementul 1: ");
+                ante = int.Parse(Console.ReadLine());
+                Console.Write($"Elementul 2: ");
+                x = int.Parse(Console.ReadLine());
+                if (x > ante)
                 {
-                    Console.Write($"Elementul {i + 1}: ");
-                    x = int.Parse(Console.ReadLine());
-                    if (x < ante) stop++;
-                    if (x == ante) repetat = true;
                     ante = x;
-                }
-                if (stop == 0 && !repetat) Console.WriteLine("Sirul este o secventa monotona (crescatoare) rotita.(Sirul era deja crescatoare)");
-                else if (stop == 1) Console.WriteLine("Sirul este o secventa monotona (crescatoare) rotita");
-                else if(stop == n-2) Console.WriteLine("Sirul este o secventa monotona (descrescatoare) rotita");
+                    for (int i = 2; i < n; i++)
+                    {
+                        Console.Write($"Elementul {i + 1}: ");
+                        x = int.Parse(Console.ReadLine());
+                        if (x < ante) stop++;
+                        if (x == ante) repetat = true;
+                        ante = x;
+                    }
+                    if (stop == 0 && !repetat) Console.WriteLine("Sirul este o secventa monotona (crescatoare) rotita.(Sirul era deja crescatoare)");
+                    else if (stop == 1) Console.WriteLine("Sirul este o secventa monotona (crescatoare) rotita");
+                    else if (stop == n - 2) Console.WriteLine("Sirul este o secventa monotona (descrescatoare) rotita");
                     else Console.Write("Sirul nu este monotona rotita");
-            }
-            else
-            {
-                ante = x;
-                for (int i = 2; i < n; i++)
-                {
-                    Console.Write($"Elementul {i + 1}: ");
-                    x = int.Parse(Console.ReadLine());
-                    if (x > ante) stop++;
-                    if (x == ante) repetat = true;
-                    ante = x;
                 }
-                if (stop == 0 && !repetat) Console.WriteLine("Sirul este o secventa monotona (descrescatoare) rotita.(Sirul era deja descrescatoare)");
-                else if (stop == 1) Console.WriteLine("Sirul este o secventa monotona (descrescatoare) rotita");
-                else if(stop == n-2) Console.WriteLine("Sirul este o secventa monotona (crescatoare) rotita");
-                else Console.Write("Sirul nu este monotona rotita");
+                else
+                {
+                    ante = x;
+                    for (int i = 2; i < n; i++)
+                    {
+                        Console.Write($"Elementul {i + 1}: ");
+                        x = int.Parse(Console.ReadLine());
+                        if (x > ante) stop++;
+                        if (x == ante) repetat = true;
+                        ante = x;
+                    }
+                    if (stop == 0 && !repetat) Console.WriteLine("Sirul este o secventa monotona (descrescatoare) rotita.(Sirul era deja descrescatoare)");
+                    else if (stop == 1) Console.WriteLine("Sirul este o secventa monotona (descrescatoare) rotita");
+                    else if (stop == n - 2) Console.WriteLine("Sirul este o secventa monotona (crescatoare) rotita");
+                    else Console.Write("Sirul nu este monotona rotita");
+                }
             }
-
+            else Console.WriteLine("n este prea mic!");
         }
 
         /// <summary>
@@ -265,20 +282,24 @@ namespace Setul_2
             
             Console.Write(" Determinati daca o secventa de n numere este o secventa crescatoare rotita. \nIntroduceti o valoare pentru n:");
             n = int.Parse(Console.ReadLine());
-            Console.Write($"Elementul 1: ");
-            ante = int.Parse(Console.ReadLine());
-            for (int i = 1; i < n; i++)
-            {
-                Console.Write($"Elementul {i + 1}: ");
-                x = int.Parse(Console.ReadLine());
-                if (x < ante) stop++;
-                if (x == ante) repetat = true;
-                ante = x;
-            }
-            if (stop == 0 && !repetat) Console.WriteLine($"Sirul este o secventa crescatoare rotita.(Sirul era deja crescatoare)");
-            else if (stop == 1) Console.WriteLine($"Sirul este o secventa crescatoare rotita");
-            else Console.Write("Sirul nu poate fi o secventa crescatoare rotita");
+            if (n > 0)
 
+            {
+                Console.Write($"Elementul 1: ");
+                ante = int.Parse(Console.ReadLine());
+                for (int i = 1; i < n; i++)
+                {
+                    Console.Write($"Elementul {i + 1}: ");
+                    x = int.Parse(Console.ReadLine());
+                    if (x < ante) stop++;
+                    if (x == ante) repetat = true;
+                    ante = x;
+                }
+                if (stop == 0 && !repetat) Console.WriteLine($"Sirul este o secventa crescatoare rotita.(Sirul era deja crescatoare)");
+                else if (stop == 1) Console.WriteLine($"Sirul este o secventa crescatoare rotita");
+                else Console.Write("Sirul nu poate fi o secventa crescatoare rotita");
+            }
+            else Console.WriteLine("n este prea mic!");
         }
 
         /// <summary>
@@ -286,24 +307,33 @@ namespace Setul_2
         /// </summary>
         private static void P12()
         {
-            int x, n,nrcuv=0,l=0;
+            int x, n, nrcuv = 0, l = 0;
             Console.Write("Cate grupuri de numere consecutive diferite de zero sunt intr-o secventa de n numere.\nIntroduceti o valoare pentru n:");
             n = int.Parse(Console.ReadLine());
-
-            for (int i = 0; i < n; i++)
+            if (n > 0)
             {
-                Console.Write($"Elementul {i + 1}: ");
-                x = int.Parse(Console.ReadLine());
-                if (x != 0) l++;
-                else
-                    if (l!=0)
+                for (int i = 0; i < n; i++)
+                {
+                    Console.Write($"Elementul {i + 1}: ");
+                    x = int.Parse(Console.ReadLine());
+                    if (x != 0) l++;
+                    else
+                        if (l != 0)
+                    {
+                        nrcuv++;
+                        l = 0;
+                    }
+
+                }
+                if (l != 0)
                 {
                     nrcuv++;
                     l = 0;
                 }
-            }
 
-            Console.WriteLine($"Sunt {nrcuv} grupuri de numere diferite de zero.");
+                Console.WriteLine($"Sunt {nrcuv} grupuri de numere diferite de zero.");
+            }
+            else Console.WriteLine("n este prea mic!");
         }
 
         static int inversa(int n)
@@ -326,16 +356,19 @@ namespace Setul_2
             int x, n, suma = 0,inv;
             Console.Write("Se da o secventa de n numere. Se cere sa se calculeze suma inverselor acestor numere. \nIntroduceti o valoare pentru n:");
             n = int.Parse(Console.ReadLine());
-           
-            for (int i = 0; i < n; i++)
+            if (n > 0)
             {
-                Console.Write($"Elementul {i + 1}: ");
-                x = int.Parse(Console.ReadLine());
-                inv = inversa(x);
-                suma += inv;
+                for (int i = 0; i < n; i++)
+                {
+                    Console.Write($"Elementul {i + 1}: ");
+                    x = int.Parse(Console.ReadLine());
+                    inv = inversa(x);
+                    suma += inv;
+                }
+
+                Console.WriteLine($"Suma inverselor este {suma}");
             }
-            
-            Console.WriteLine($"Suma inverselor este {suma}");
+            else Console.WriteLine("n este prea mic!");
         }
 
         /// <summary>
@@ -346,24 +379,28 @@ namespace Setul_2
             int x, n, max, nr,maxmax=0;
             Console.Write("Se da o secventa de n numere. Care este numarul maxim de numere consecutive egale din secventa.\nIntroduceti o valoare pentru n:");
             n = int.Parse(Console.ReadLine());
-            Console.Write($"Elementul 1: ");
-            nr = int.Parse(Console.ReadLine());
-            max = 1;
-            for (int i = 1; i < n; i++)
+            if (n > 0)
             {
-                Console.Write($"Elementul {i+1}: ");
-                x = int.Parse(Console.ReadLine());
-                if (nr == x) max++;
-                else
+                Console.Write($"Elementul 1: ");
+                nr = int.Parse(Console.ReadLine());
+                max = 1;
+                for (int i = 1; i < n; i++)
                 {
-                    if (max > maxmax) maxmax = max;
-                    nr = x;
-                    max = 1;
+                    Console.Write($"Elementul {i + 1}: ");
+                    x = int.Parse(Console.ReadLine());
+                    if (nr == x) max++;
+                    else
+                    {
+                        if (max > maxmax) maxmax = max;
+                        nr = x;
+                        max = 1;
+                    }
                 }
+                if (max > maxmax) maxmax = max;
+
+                Console.WriteLine($"Numarul maxim de numere consecutive egale este {maxmax}.");
             }
-            if (max > maxmax) maxmax = max;
-            
-            Console.WriteLine($"Numarul maxim de numere consecutive egale este {maxmax}.");
+            else Console.WriteLine("n este prea mic!");
         }
 
         /// <summary>
@@ -374,55 +411,59 @@ namespace Setul_2
             int x, n,ante,ok=0;
             Console.Write("Sa se determine daca o secventa de n numere este monotona.\nIntroduceti o valoare pentru n:");
             n = int.Parse(Console.ReadLine());
-            Console.Write($"Elementul 1: ");
-            ante = int.Parse(Console.ReadLine());
-            Console.Write($"Elementul 2: ");
-            x = int.Parse(Console.ReadLine());
-            if (ante < x)
+            if (n > 1)
             {
-                ante = x;
-                for (int i = 2; i < n; i++)
+                Console.Write($"Elementul 1: ");
+                ante = int.Parse(Console.ReadLine());
+                Console.Write($"Elementul 2: ");
+                x = int.Parse(Console.ReadLine());
+                if (ante < x)
                 {
-                    Console.Write($"Elementul {i + 1}: ");
-                    x = int.Parse(Console.ReadLine());
-                    if (x <= ante) ok = 1;
                     ante = x;
+                    for (int i = 2; i < n; i++)
+                    {
+                        Console.Write($"Elementul {i + 1}: ");
+                        x = int.Parse(Console.ReadLine());
+                        if (x <= ante) ok = 1;
+                        ante = x;
 
+                    }
+                    if (ok == 0)
+                        Console.WriteLine("Sirul este monoton crescator");
                 }
-                if (ok == 0)
-                    Console.WriteLine("Sirul este monoton crescator");
-            }
-            else
-                if (ante > x)
-            {
-                ante = x;
-                for (int i = 2; i < n; i++)
+                else
+                    if (ante > x)
                 {
-                    Console.Write($"Elementul {i + 1}: ");
-                    x = int.Parse(Console.ReadLine());
-                    if (x >= ante) ok = 1;
                     ante = x;
+                    for (int i = 2; i < n; i++)
+                    {
+                        Console.Write($"Elementul {i + 1}: ");
+                        x = int.Parse(Console.ReadLine());
+                        if (x >= ante) ok = 1;
+                        ante = x;
+                    }
+                    if (ok == 0)
+                        Console.WriteLine("Sirul este monoton descrescator");
                 }
-                if (ok == 0)
-                    Console.WriteLine("Sirul este monoton descrescator");
-            }
-            else
-            {
-                ok = 1;
-                for (int i = 2; i < n; i++)
+                else
                 {
-                    Console.Write($"Elementul {i + 1}: ");
-                    x = int.Parse(Console.ReadLine());
+                    ok = 1;
+                    for (int i = 2; i < n; i++)
+                    {
+                        Console.Write($"Elementul {i + 1}: ");
+                        x = int.Parse(Console.ReadLine());
 
+                    }
                 }
+                if (ok != 0)
+                    Console.WriteLine("Sirul NU este monoton.");
             }
-            if (ok != 0)
-                Console.WriteLine("Sirul NU este monoton.");
+            else Console.WriteLine("n este prea mic!");
 
         }
         static int fibonacci(int n)
         {
-            if (n == 1) return 0;
+            if (n == 1 || n == 0) return 0;
             else
                 if (n == 2) return 1;
             else return fibonacci(n-2)+fibonacci(n - 1);
@@ -457,18 +498,22 @@ namespace Setul_2
             int x, n, max ,min;
             Console.Write("Se da o secventa de n numere. Sa se determine cea mai mare si cea mai mica valoare din secventa.\nIntroduceti o valoare pentru n:");
             n = int.Parse(Console.ReadLine());
-            Console.Write($"Elementul 1: ");
-            min = int.Parse(Console.ReadLine());
-            max = min;
-            for (int i = 1; i < n; i++)
+            if (n > 0)
             {
-                Console.Write($"Elementul {i+1}: ");
-                x = int.Parse(Console.ReadLine());
-                if (x > max) max = x;
-                if (x < min) min = x;
+                Console.Write($"Elementul 1: ");
+                min = int.Parse(Console.ReadLine());
+                max = min;
+                for (int i = 1; i < n; i++)
+                {
+                    Console.Write($"Elementul {i + 1}: ");
+                    x = int.Parse(Console.ReadLine());
+                    if (x > max) max = x;
+                    if (x < min) min = x;
 
+                }
+                Console.WriteLine($"Numarul minim este {min}, numarul maxim este {max}");
             }
-            Console.WriteLine($"Numarul minim este {min}, numarul maxim este {max}");
+            else Console.WriteLine("n este prea mic!");
         }
 
         /// <summary>
@@ -479,18 +524,22 @@ namespace Setul_2
             int x, n, ok=0, ante;
             Console.Write("Se da o secventa de n numere. Sa se determine daca numerele din secventa sunt in ordine crescatoare. \nIntroduceti o valoare pentru n:");
             n = int.Parse(Console.ReadLine());
-            Console.Write($"Elementul 1: ");
-            ante = int.Parse(Console.ReadLine());
-            for (int i = 1; i < n; i++)
+            if (n > 0)
             {
-                Console.Write($"Elementul {i + 1}: ");
-                x = int.Parse(Console.ReadLine());
-                if (x <= ante) ok = 1;
-                ante = x;
+                Console.Write($"Elementul 1: ");
+                ante = int.Parse(Console.ReadLine());
+                for (int i = 1; i < n; i++)
+                {
+                    Console.Write($"Elementul {i + 1}: ");
+                    x = int.Parse(Console.ReadLine());
+                    if (x <= ante) ok = 1;
+                    ante = x;
 
+                }
+                if (ok == 0) Console.WriteLine("Numerele sunt in ordine crescatoare");
+                else Console.WriteLine("Numerele NU sunt in ordine crescatoare");
             }
-            if(ok == 0) Console.WriteLine("Numerele sunt in ordine crescatoare");
-            else Console.WriteLine("Numerele NU sunt in ordine crescatoare");
+            else Console.WriteLine("n este prea mic!");
         }
 
 
@@ -502,20 +551,24 @@ namespace Setul_2
             int x, n, poz = -1, egal=0;
             Console.Write("Cate elemente dintr-o secventa de n numere sunt egale cu pozitia pe care apar in secventa.\nIntroduceti o valoare pentru n:");
             n = int.Parse(Console.ReadLine());
-            Console.WriteLine($"Introduceti {n} valori: ");
-            for (int i = 0; i < n; i++)
+            if (n > 0)
             {
-                x = int.Parse(Console.ReadLine());
-                poz++;
-                if (x == poz) egal++;
+                Console.WriteLine($"Introduceti {n} valori: ");
+                for (int i = 0; i < n; i++)
+                {
+                    x = int.Parse(Console.ReadLine());
+                    poz++;
+                    if (x == poz) egal++;
 
+                }
+                // daca a apare de mai multe ori se salveaza ultima aparitie
+                if (egal == 0) Console.WriteLine("Nu exista elemente egale cu pozitia lor");
+                else
+                if (egal == 1) Console.WriteLine("Exista un element egal cu pozitia sa");
+                else
+                    Console.WriteLine($"{egal} elemente sunt egale cu pozitia lor");
             }
-            // daca a apare de mai multe ori se salveaza ultima aparitie
-            if(egal==0) Console.WriteLine("Nu exista elemente egale cu pozitia lor");
-            else
-            if (egal == 1) Console.WriteLine("Exista un element egal cu pozitia sa");
-            else
-            Console.WriteLine($"{egal} elemente sunt egale cu pozitia lor");
+            else Console.WriteLine("n este prea mic!");
         }
 
         /// <summary>
@@ -526,19 +579,25 @@ namespace Setul_2
             int x, n, a,poz=-1, pozf=-1;
             Console.Write("Se da o secventa de n numere. Determinati pe ce pozitie se afla in secventa un numar a.\nIntroduceti o valoare pentru n:");
             n = int.Parse(Console.ReadLine());
-            Console.Write("Introduceti valoarea pentru a: ");
-            a = int.Parse(Console.ReadLine());
-            Console.WriteLine($"Introduceti {n} valori: ");
-            for (int i = 0; i < n; i++)
+            if (n > 0)
             {
-                x = int.Parse(Console.ReadLine());
-                poz++;
-                if (x == a) pozf = poz;
-                
+                Console.Write("Introduceti valoarea pentru a: ");
+                a = int.Parse(Console.ReadLine());
+                Console.WriteLine($"Introduceti {n} valori: ");
+                for (int i = 0; i < n; i++)
+                {
+                    x = int.Parse(Console.ReadLine());
+                    poz++;
+                    if (x == a) pozf = poz;
+
+                }
+                // daca a apare de mai multe ori se salveaza ultima aparitie
+                if (pozf != -1)
+                    Console.WriteLine($"Numarul {a} e pe pozitia {pozf}");
+                else
+                    Console.WriteLine($"Numarul {a} e pe pozitia {pozf}, adica nu se afla in sir");
             }
-            // daca a apare de mai multe ori se salveaza ultima aparitie
-            Console.WriteLine($"Numarul {a} e pe pozitia {pozf}");
-            
+            else Console.WriteLine("n este prea mic!");
         }
 
         /// <summary>
@@ -549,7 +608,7 @@ namespace Setul_2
             long n, suma, produs = 1;
             Console.Write("Calculati suma si produsul numerelor de la 1 la n. \nIntroduceti o valoare pentru n:");
             n = int.Parse(Console.ReadLine());
-            if (n < 0) { Console.Write("Introduceti o valoare pozitiva!"); return; }
+            if (n < 1) { Console.Write("n este prea mic!"); return; }
            
             for (int i = 1; i <= n; i++)
             {
@@ -570,19 +629,22 @@ namespace Setul_2
             int x, n, par = 0, impar = 0, zero = 0 ;
             Console.Write("Se da o secventa de n numere. Sa se determina cate sunt negative, cate sunt zero si cate sunt pozitive.\nIntroduceti o valoare pentru n:");
             n = int.Parse(Console.ReadLine());
-
-            for (int i = 0; i < n; i++)
+            if (n > 0)
             {
-                Console.Write($"Elementul {i + 1}: ");
-                x = int.Parse(Console.ReadLine());
-                if (x % 2 == 0) par++;
-                else
-                    impar++;
-                if (x == 0) zero++;
-                
+                for (int i = 0; i < n; i++)
+                {
+                    Console.Write($"Elementul {i + 1}: ");
+                    x = int.Parse(Console.ReadLine());
+                    if (x % 2 == 0 && x != 0) par++;
+                    else
+                        impar++;
+                    if (x == 0) zero++;
 
+
+                }
+                Console.WriteLine($"Numarul elementelor: pare = {par}, impare = {impar}, si zero = {zero}");
             }
-            Console.WriteLine($"Numarul elementelor: pare = {par}, impare = {impar}, si zero = {zero}");
+            else Console.WriteLine("n este prea mic!");
         }
 
         /// <summary>
@@ -593,16 +655,18 @@ namespace Setul_2
             int x, n, par=0;
             Console.Write("Se da o secventa de n numere. Sa se determine cate din ele sunt pare.\nIntroduceti o valoare pentru n:");
             n= int.Parse(Console.ReadLine());
-           
-            for (int i = 0; i < n; i++)
+            if (n > 0)
             {
-                Console.Write($"Elementul {i+1}: ");
-                x = int.Parse(Console.ReadLine());
-                if (x % 2 == 0) par++;
+                for (int i = 0; i < n; i++)
+                {
+                    Console.Write($"Elementul {i + 1}: ");
+                    x = int.Parse(Console.ReadLine());
+                    if (x % 2 == 0) par++;
 
+                }
+                Console.WriteLine($"Numarul elementelor pare este {par}");
             }
-            Console.WriteLine($"Numarul elementelor pare este {par}");
-
+            else Console.WriteLine("n este prea mic!");
         }
     }
 }
